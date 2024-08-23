@@ -5,13 +5,14 @@
 // Supply the missing code
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: index.php');
+    exit();
 }
 
-// Supply the missing code
-$complete_name = $_POST['complete_name'];
-$email = $_POST['email'];
-$birthdate = $_POST['birthdate'];
-$contact_number = $_POST['contact_number'];
+// Retrieve POST data with checks for existence
+$complete_name = isset($_POST['complete_name']) ? $_POST['complete_name'] : '';
+$email = isset($_POST['email']) ? $_POST['email'] : '';
+$birthdate = isset($_POST['birthdate']) ? $_POST['birthdate'] : '';
+$contact_number = isset($_POST['contact_number']) ? $_POST['contact_number'] : '';
 ?>
 <html>
 <head>
@@ -22,16 +23,20 @@ $contact_number = $_POST['contact_number'];
 <body>
 <section class="section">
     <h1 class="title">Instructions</h1>
+    <br>
+    <h2 class="subtitle">
+        Hello, <?php echo htmlspecialchars($complete_name); ?>!
+    </h2>
     <h2 class="subtitle">
         This is the IPT10 PHP Quiz Web Application Laboratory Activity.
     </h2>
 
     <!-- Supply the correct HTTP method and target form handler resource -->
-    <form method="POST" action="">
-        <input type="hidden" value="<?php echo $complete_name; ?>" />
-        <input type="hidden" value="<?php echo $email; ?>" />
-        <input type="hidden" value="<?php echo $birthdate; ?>" />
-        <input type="hidden" value="<?php echo $contact_number; ?>" />
+    <form method="POST" action="quiz.php">
+        <input type="hidden" name="complete_name" value="<?php echo htmlspecialchars($complete_name); ?>" />
+        <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>" />
+        <input type="hidden" name="birthdate" value="<?php echo htmlspecialchars($birthdate); ?>" />
+        <input type="hidden" name="contact_number" value="<?php echo htmlspecialchars($contact_number); ?>" />
 
         <!-- Display the instruction -->
         <p>
@@ -48,16 +53,30 @@ $contact_number = $_POST['contact_number'];
         <div class="field">
             <div class="control">
                 <label class="checkbox">
-                <input type="checkbox" name="disagree">
+                <input type="checkbox" id="terms-checkbox" name="disagree">
                 I agree to the <a href="#">terms and conditions</a>
                 </label>
             </div>
         </div>
 
         <!-- Start Quiz button -->
-        <button type="submit" class="button is-link">Start Quiz</button>
+        <button type="submit" id="start-quiz-btn" class="button is-link">Start Quiz</button>
     </form>
 </section>
+
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkbox = document.getElementById('terms-checkbox');
+            const startQuizBtn = document.getElementById('start-quiz-btn');
+
+            const updateButtonState = () => {
+                startQuizBtn.disabled = !checkbox.checked;
+            };
+
+            checkbox.addEventListener('change', updateButtonState);
+            updateButtonState();
+        });
+    </script>
 
 </body>
 </html>

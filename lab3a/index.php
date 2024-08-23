@@ -3,6 +3,7 @@
     <meta charset="utf-8">
     <title>IPT10 Laboratory Activity #3A</title>
     <!-- Add the Bulma CSS here -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
 </head>
 <body>
 <section class="section">
@@ -11,7 +12,7 @@
         This is the IPT10 PHP Quiz Web Application Laboratory Activity. Please register
     </h2>
     <!-- Supply the correct HTTP method and target form handler resource -->
-    <form method="GET" action="pre-instructions.php">
+    <form method="POST" action="instructions.php">
         <div class="field">
             <label class="label">Name</label>
             <div class="control">
@@ -44,6 +45,25 @@
         <button type="submit" class="button is-link">Proceed Next</button>
     </form>
 </section>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const nameInput = document.querySelector('input[name="complete_name"]');
+    const emailInput = document.querySelector('input[name="email"]');
+    const submitButton = document.querySelector('button[type="submit"]');
+  
+    const validateForm = () => {
+      const isValidName = nameInput.value.trim() !== '';
+      const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value);
+      submitButton.disabled = !(isValidName && isValidEmail);
+    };
+  
+    nameInput.addEventListener('input', validateForm);
+    emailInput.addEventListener('input', validateForm);
+  
+    submitButton.disabled = true;
+  });
+  
+</script>
 
 </body>
 </html>
