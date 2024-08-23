@@ -28,6 +28,12 @@
             <input type="file" name="text_file" accept=".txt" />
             </p>
         </div>
+        <div class="p-card">
+            <h3>PDF File</h3>
+            <p class="p-card__content">
+                <input type="file" name="pdf_file" accept=".pdf" />
+            </p>
+        </div>
 
         <div>
             <button>
